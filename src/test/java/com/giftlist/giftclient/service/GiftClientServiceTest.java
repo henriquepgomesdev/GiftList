@@ -22,9 +22,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Testes para o serviço de produtos.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class GiftClientServiceTest {
 

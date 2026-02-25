@@ -55,10 +55,8 @@ public class GiftListControllerTest {
 
     @Test
     public void testGetAllProducts() throws Exception {
-        // Configura o mock
         when(giftListService.findAllGiftLists()).thenReturn(Arrays.asList(product1, product2));
 
-        // Executa e verifica
         mockMvc.perform(get("/api/gift-list"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -68,7 +66,6 @@ public class GiftListControllerTest {
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].name", is("Lista casamento")));
 
-        // Verifica se o método do serviço foi chamado
         verify(giftListService, times(1)).findAllGiftLists();
     }
 }

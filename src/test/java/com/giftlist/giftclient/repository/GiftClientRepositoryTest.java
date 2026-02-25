@@ -34,7 +34,6 @@ public class GiftClientRepositoryTest {
 
     @Before
     public void setUp() {
-        // Cria produtos para testes
         GiftClient giftClient1 = new GiftClient();
         People people1 = new People();
         people1.setName("Maria");

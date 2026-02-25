@@ -11,9 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Implementação do serviço para gerenciamento de produtos.
- */
 @Service
 @RequiredArgsConstructor
 public class GiftClientServiceImpl implements GiftClientService {

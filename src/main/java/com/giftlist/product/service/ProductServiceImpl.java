@@ -10,9 +10,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Implementação do serviço para gerenciamento de produtos.
- */
 @Service
 public class ProductServiceImpl implements ProductService {
 

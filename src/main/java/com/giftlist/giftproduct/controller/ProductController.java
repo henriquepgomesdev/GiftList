@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Controller para gerenciamento de produtos.
- */
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -50,7 +47,6 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
         return productService.findProductById(id)
                 .map(existingProduct -> {
-//                    EntityUpdater.copyNonNullProperties(product, existingProduct);
                     Product updatedProduct = productService.saveProduct(existingProduct);
                     return ResponseEntity.ok(updatedProduct);
                 })

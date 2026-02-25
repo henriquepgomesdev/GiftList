@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Implementação do serviço para gerenciamento de produtos.
- */
+
 @Service
 @RequiredArgsConstructor
 public class GiftListServiceImpl implements GiftListService {
@@ -27,13 +25,6 @@ public class GiftListServiceImpl implements GiftListService {
     @Override
     @Transactional
     public GiftList createGiftList(GiftListInput giftProductInput) {
-//        Optional<GiftProduct> giftProductOpt = giftProductService.findGiftProductById(giftProductId);
-//        if (giftProductOpt.isEmpty()) {
-//            throw new IllegalArgumentException("Cliente não encontrado");
-//        }
-//
-//        GiftProduct product = giftProductOpt.get();
-
         GiftList giftProduct = new GiftList();
         giftProduct.setName(giftProductInput.name());
         return this.saveGiftList(giftProduct);

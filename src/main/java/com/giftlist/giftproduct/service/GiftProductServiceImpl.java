@@ -40,8 +40,6 @@ public class GiftProductServiceImpl implements GiftProductService {
         giftProduct.setAmount(giftProductInput.amount());
         giftProduct.setLink(giftProductInput.link());
 
-
-        // Persiste o pedido antes de adicionar os itens
         entityManager.persist(giftProduct);
 
         return giftProduct;

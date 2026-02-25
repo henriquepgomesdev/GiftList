@@ -44,7 +44,6 @@ public class GiftListServiceTest {
         product2.setName("Produto 2");
         product2.setDescription("Descrição do Produto 2");
 
-        // Cria produto para testes
         GiftProduct giftProduct1 = new GiftProduct();
         giftProduct1.setAmount(new BigDecimal(5));
         giftProduct1.setLink("https://s.shopee.com.br/6Kvii5uX4J");

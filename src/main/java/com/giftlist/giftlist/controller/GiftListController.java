@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Controller para gerenciamento de produtos.
- */
 @RestController
 @RequestMapping("/api/gift-list")
 @RequiredArgsConstructor
@@ -55,7 +52,6 @@ public class GiftListController {
     public ResponseEntity<GiftList> updateProduct(@PathVariable Long id, @RequestBody GiftList product) {
         return giftListService.findGiftListById(id)
                 .map(existingProduct -> {
-//                    EntityUpdater.copyNonNullProperties(product, existingProduct);
                     GiftList updatedProduct = giftListService.saveGiftList(existingProduct);
                     return ResponseEntity.ok(updatedProduct);
                 })
