@@ -1,0 +1,15 @@
+# Ignorar pasta de configuração do IntelliJ IDEA
+.idea/
+*.iml
+
+# Ignorar arquivos de build
+/out/
+/build/
+
+# Ignorar arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar logs e temporários
+*.log
+*.tmp
