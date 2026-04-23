@@ -1,9 +1,10 @@
 package com.giftlist.giftclient.service;
 
 import com.giftlist.giftclient.domain.GiftClient;
+import com.giftlist.giftclient.mapper.GiftClientMapper;
+import com.giftlist.giftclient.model.GiftClientDto;
 import com.giftlist.giftclient.model.GiftClientInput;
 import com.giftlist.giftclient.repository.GiftClientRepository;
-import com.giftlist.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +16,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GiftClientServiceImpl implements GiftClientService {
 
-    private final GiftClientRepository giftProductRepository;
+    private final GiftClientRepository giftClientRepository;
 
-    private final ProductService productService;
+    private final GiftClientMapper mapper;
 
     @Override
     @Transactional
@@ -29,22 +30,25 @@ public class GiftClientServiceImpl implements GiftClientService {
     @Override
     @Transactional
     public GiftClient saveGiftClient(GiftClient product) {
-        return giftProductRepository.save(product);
+        return giftClientRepository.save(product);
     }
 
     @Override
     public Optional<GiftClient> findGiftClientById(Long id) {
-        return giftProductRepository.findById(id);
+        return giftClientRepository.findById(id);
     }
 
     @Override
-    public List<GiftClient> findAllGiftClients() {
-        return giftProductRepository.findAll();
+    public List<GiftClientDto> findAllGiftClients() {
+        return giftClientRepository.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 
     @Override
     @Transactional
     public void deleteGiftClient(Long productId) {
-        giftProductRepository.deleteById(productId);
+        giftClientRepository.deleteById(productId);
     }
 }

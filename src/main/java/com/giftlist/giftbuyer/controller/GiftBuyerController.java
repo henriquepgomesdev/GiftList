@@ -1,6 +1,8 @@
 package com.giftlist.giftbuyer.controller;
 
 import com.giftlist.giftbuyer.domain.GiftBuyer;
+import com.giftlist.giftbuyer.model.GiftBuyerDto;
+import com.giftlist.giftbuyer.model.GiftBuyerInput;
 import com.giftlist.giftbuyer.service.GiftBuyerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,37 +27,25 @@ public class GiftBuyerController {
     private final GiftBuyerService giftBuyerService;
 
     @GetMapping
-    public ResponseEntity<List<GiftBuyer>> getAllProducts() {
-        List<GiftBuyer> products = giftBuyerService.findAllGiftBuyers();
-        return ResponseEntity.ok(products);
+    public ResponseEntity<List<GiftBuyerDto>> getAllProducts() {
+        return ResponseEntity.ok(giftBuyerService.findAllGiftBuyers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GiftBuyer> getProductById(@PathVariable Long id) {
+    public ResponseEntity<GiftBuyerDto> getProductById(@PathVariable Long id) {
         return giftBuyerService.findGiftBuyerById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<GiftBuyer> createProduct(@RequestBody GiftBuyer product) {
-        GiftBuyer savedProduct = giftBuyerService.saveGiftBuyer(product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<GiftBuyer> updateProduct(@PathVariable Long id, @RequestBody GiftBuyer product) {
-        return giftBuyerService.findGiftBuyerById(id)
-                .map(existingProduct -> {
-                    GiftBuyer updatedProduct = giftBuyerService.saveGiftBuyer(existingProduct);
-                    return ResponseEntity.ok(updatedProduct);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<GiftBuyerDto> createProduct(@RequestBody GiftBuyerInput input) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(giftBuyerService.saveGiftBuyer(input, null));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        Optional<GiftBuyer> productOpt = giftBuyerService.findGiftBuyerById(id);
+        Optional<GiftBuyerDto> productOpt = giftBuyerService.findGiftBuyerById(id);
         if (productOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

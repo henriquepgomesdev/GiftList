@@ -1,6 +1,5 @@
 package com.giftlist.product.controller;
 
-import com.giftlist.giftproduct.controller.ProductController;
 import com.giftlist.product.domain.Product;
 import com.giftlist.product.service.ProductService;
 import org.junit.Before;

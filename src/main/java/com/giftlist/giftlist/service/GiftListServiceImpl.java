@@ -1,6 +1,8 @@
 package com.giftlist.giftlist.service;
 
 import com.giftlist.giftlist.domain.GiftList;
+import com.giftlist.giftlist.mapper.GiftListMapper;
+import com.giftlist.giftlist.model.GiftListDto;
 import com.giftlist.giftlist.model.GiftListInput;
 import com.giftlist.giftlist.repository.GiftListRepository;
 import com.giftlist.giftproduct.domain.GiftProduct;
@@ -17,10 +19,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GiftListServiceImpl implements GiftListService {
 
-
     private final GiftListRepository giftListRepository;
 
     private final GiftProductService giftProductService;
+
+    private final GiftListMapper mapper;
 
     @Override
     @Transactional
@@ -64,8 +67,16 @@ public class GiftListServiceImpl implements GiftListService {
     }
 
     @Override
-    public List<GiftList> findAllGiftLists() {
-        return giftListRepository.findAll();
+    public Optional<GiftListDto> findGiftListDtoById(Long id) {
+        return findGiftListById(id).map(mapper::toDTO);
+    }
+
+    @Override
+    public List<GiftListDto> findAllGiftLists() {
+        return giftListRepository.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.giftlist.giftlist.controller;
 
 import com.giftlist.giftlist.domain.GiftList;
+import com.giftlist.giftlist.model.GiftListDto;
 import com.giftlist.giftlist.service.GiftListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,15 +27,15 @@ public class GiftListController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<GiftList> getProductById(@PathVariable Long id) {
-        return giftListService.findGiftListById(id)
+    public ResponseEntity<GiftListDto> getGiftListById(@PathVariable Long id) {
+        return giftListService.findGiftListDtoById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public ResponseEntity<List<GiftList>> getAllProducts() {
-        List<GiftList> giftLists = giftListService.findAllGiftLists();
+    public ResponseEntity<List<GiftListDto>> getAllProducts() {
+        List<GiftListDto> giftLists = giftListService.findAllGiftLists();
         if (giftLists.isEmpty()) {
             return ResponseEntity.noContent().build();
 

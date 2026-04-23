@@ -3,6 +3,8 @@ package com.giftlist.giftbuyer.service;
 import com.giftlist.common.domain.People;
 import com.giftlist.common.service.PeopleService;
 import com.giftlist.giftbuyer.domain.GiftBuyer;
+import com.giftlist.giftbuyer.mapper.GiftBuyerMapper;
+import com.giftlist.giftbuyer.model.GiftBuyerDto;
 import com.giftlist.giftbuyer.model.GiftBuyerInput;
 import com.giftlist.giftbuyer.repository.GiftBuyerRepository;
 import com.giftlist.giftproduct.domain.GiftProduct;
@@ -46,6 +48,8 @@ public class GiftBuyerServiceTest {
 
     private GiftProduct giftProduct;
 
+    @Mock
+    private GiftBuyerMapper mapper;
 
     @Before
     public void setUp() throws Exception {
@@ -79,7 +83,8 @@ public class GiftBuyerServiceTest {
 
         GiftBuyerInput giftBuyerInput = new GiftBuyerInput("Henrique", "85135289003", "62999914474");
 
-        GiftBuyer giftBuyerResult = giftBuyerService.giftBuy(1L, giftBuyerInput);
+        when(mapper.toDTO(any(GiftBuyer.class))).thenReturn(new GiftBuyerDto(giftBuyerInput.person().name(), giftBuyerInput.person().cpf(), giftBuyerInput.person().phone()));
+        GiftBuyerDto giftBuyerResult = giftBuyerService.giftBuy(1L, giftBuyerInput);
 
         assertNotNull("Gift buyer criado não deve ser nulo", giftBuyerResult);
 

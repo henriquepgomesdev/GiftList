@@ -1,7 +1,7 @@
 package com.giftlist.giftList.controller;
 
 import com.giftlist.giftlist.controller.GiftListController;
-import com.giftlist.giftlist.domain.GiftList;
+import com.giftlist.giftlist.model.GiftListDto;
 import com.giftlist.giftlist.service.GiftListService;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,26 +36,22 @@ public class GiftListControllerTest {
     @InjectMocks
     private GiftListController giftListController;
 
-    private GiftList product1;
-    private GiftList product2;
+    private GiftListDto giftList1;
+    private GiftListDto giftList2;
 
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(giftListController).build();
 
-        product1 = new GiftList();
-        product1.setId(1L);
-        product1.setName("Lista casa nova");
+        giftList1 = new GiftListDto(1L, "Lista casa nova");
 
-        product2 = new GiftList();
-        product2.setId(2L);
-        product2.setName("Lista casamento");
+        giftList2 = new GiftListDto(2L, "Lista casamento");
 
     }
 
     @Test
     public void testGetAllProducts() throws Exception {
-        when(giftListService.findAllGiftLists()).thenReturn(Arrays.asList(product1, product2));
+        when(giftListService.findAllGiftLists()).thenReturn(Arrays.asList(giftList1, giftList2));
 
         mockMvc.perform(get("/api/gift-list"))
                 .andExpect(status().isOk())

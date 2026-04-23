@@ -1,7 +1,12 @@
 package com.giftlist.giftclient.service;
 
 import com.giftlist.common.domain.People;
+import com.giftlist.giftbuyer.domain.GiftBuyer;
+import com.giftlist.giftbuyer.mapper.GiftBuyerMapper;
+import com.giftlist.giftbuyer.model.GiftBuyerDto;
 import com.giftlist.giftclient.domain.GiftClient;
+import com.giftlist.giftclient.mapper.GiftClientMapper;
+import com.giftlist.giftclient.model.GiftClientDto;
 import com.giftlist.giftclient.repository.GiftClientRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +35,9 @@ public class GiftClientServiceTest {
 
     @InjectMocks
     private GiftClientServiceImpl giftClientService;
+
+    @Mock
+    private GiftClientMapper mapper;
 
     private GiftClient giftClient1;
     private GiftClient giftClient2;
@@ -111,7 +119,8 @@ public class GiftClientServiceTest {
     public void testFindAll() {
         when(giftClientRepository.findAll()).thenReturn(Arrays.asList(giftClient1, giftClient2, giftClient3));
 
-        List<GiftClient> foundGiftClients = giftClientService.findAllGiftClients();
+        when(mapper.toDTO(any(GiftClient.class))).thenReturn(new GiftClientDto(null, null));
+        List<GiftClientDto> foundGiftClients = giftClientService.findAllGiftClients();
 
         assertEquals("O cliente salvo deveria ter o mesmo ID", 3, foundGiftClients.size());
     }

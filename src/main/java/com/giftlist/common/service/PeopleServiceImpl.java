@@ -14,12 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PeopleServiceImpl implements PeopleService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     private final PeopleRepository peopleRepository;
-
-    private final ProductService productService;
 
     @Override
     public Optional<People> findPeopleByCpf(String cpf) {

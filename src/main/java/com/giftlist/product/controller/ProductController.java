@@ -1,4 +1,4 @@
-package com.giftlist.giftproduct.controller;
+package com.giftlist.product.controller;
 
 import com.giftlist.product.domain.Product;
 import com.giftlist.product.service.ProductService;

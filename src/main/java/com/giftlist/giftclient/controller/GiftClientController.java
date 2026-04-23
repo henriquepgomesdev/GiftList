@@ -1,6 +1,7 @@
 package com.giftlist.giftclient.controller;
 
 import com.giftlist.giftclient.domain.GiftClient;
+import com.giftlist.giftclient.model.GiftClientDto;
 import com.giftlist.giftclient.service.GiftClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,8 @@ public class GiftClientController {
     private final GiftClientService giftClientService;
 
     @GetMapping
-    public ResponseEntity<List<GiftClient>> getAllProducts() {
-        List<GiftClient> products = giftClientService.findAllGiftClients();
-        return ResponseEntity.ok(products);
+    public ResponseEntity<List<GiftClientDto>> getAllProducts() {
+        return ResponseEntity.ok(giftClientService.findAllGiftClients());
     }
 
     @GetMapping("/{id}")

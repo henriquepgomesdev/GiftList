@@ -1,20 +1,21 @@
 package com.giftlist.giftbuyer.service;
 
-import com.giftlist.giftbuyer.domain.GiftBuyer;
+import com.giftlist.giftbuyer.model.GiftBuyerDto;
 import com.giftlist.giftbuyer.model.GiftBuyerInput;
+import com.giftlist.giftproduct.domain.GiftProduct;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface GiftBuyerService {
 
-    GiftBuyer giftBuy(Long giftProductId, GiftBuyerInput giftProductInput);
+    GiftBuyerDto giftBuy(Long giftProductId, GiftBuyerInput giftProductInput);
 
-    GiftBuyer saveGiftBuyer(GiftBuyer product);
+    GiftBuyerDto saveGiftBuyer(GiftBuyerInput input, GiftProduct product);
 
-    Optional<GiftBuyer> findGiftBuyerById(Long id);
+    Optional<GiftBuyerDto> findGiftBuyerById(Long id);
 
-    List<GiftBuyer> findAllGiftBuyers();
+    List<GiftBuyerDto> findAllGiftBuyers();
 
     void deleteGiftBuyer(Long productId);
 }

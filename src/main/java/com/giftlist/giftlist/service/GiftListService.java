@@ -1,6 +1,7 @@
 package com.giftlist.giftlist.service;
 
 import com.giftlist.giftlist.domain.GiftList;
+import com.giftlist.giftlist.model.GiftListDto;
 import com.giftlist.giftlist.model.GiftListInput;
 
 import java.util.List;
@@ -14,9 +15,11 @@ public interface GiftListService {
 
     Optional<GiftList> findGiftListById(Long id);
 
+    Optional<GiftListDto> findGiftListDtoById(Long id);
+
     GiftList addGiftProductInGiftList(Long giftProductId, Long giftListId);
 
-    List<GiftList> findAllGiftLists();
+    List<GiftListDto> findAllGiftLists();
 
     void deleteGiftList(Long productId);
 }

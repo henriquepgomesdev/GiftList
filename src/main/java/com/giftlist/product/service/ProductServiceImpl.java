@@ -36,32 +36,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-
-    @Override
-    public void updateProductStock(Long productId, Integer newStock) {
-        if (newStock < 0) {
-            throw new IllegalArgumentException("O novo stock não pode ser negativo");
-        }
-        Optional<Product> productOpt = productRepository.findById(productId);
-        if (productOpt.isPresent()) {
-            Product product = productOpt.get();
-            productRepository.save(product);
-        }
-    }
-
-    @Override
-    @Transactional
-    public void updateProductPrice(Long productId, BigDecimal newPrice) {
-        if (newPrice.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("O novo preço não pode ser negativo");
-        }
-        Optional<Product> productOpt = productRepository.findById(productId);
-        if (productOpt.isPresent()) {
-            Product product = productOpt.get();
-            productRepository.save(product);
-        }
-    }
-
     @Override
     @Transactional
     public void deleteProduct(Long productId) {

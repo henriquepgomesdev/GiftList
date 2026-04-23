@@ -3,6 +3,8 @@ package com.giftlist.giftbuyer.service;
 import com.giftlist.common.domain.People;
 import com.giftlist.common.service.PeopleService;
 import com.giftlist.giftbuyer.domain.GiftBuyer;
+import com.giftlist.giftbuyer.mapper.GiftBuyerMapper;
+import com.giftlist.giftbuyer.model.GiftBuyerDto;
 import com.giftlist.giftbuyer.model.GiftBuyerInput;
 import com.giftlist.giftbuyer.repository.GiftBuyerRepository;
 import com.giftlist.giftproduct.domain.GiftProduct;
@@ -24,48 +26,50 @@ public class GiftBuyerServiceImpl implements GiftBuyerService {
 
     private final PeopleService peopleService;
 
+    private final GiftBuyerMapper mapper;
+
     @Override
     @Transactional
-    public GiftBuyer giftBuy(Long giftProductId, GiftBuyerInput giftProductInput) {
+    public GiftBuyerDto giftBuy(Long giftProductId, GiftBuyerInput giftProductInput) {
         Optional<GiftProduct> giftProductOpt = giftProductService.findGiftProductById(giftProductId);
         if (giftProductOpt.isEmpty()) {
             throw new IllegalArgumentException("Cliente não encontrado");
         }
 
         GiftProduct product = giftProductOpt.get();
-
-        Optional<People> peopleOpt = peopleService.findPeopleByCpf(giftProductInput.person().cpf());
-        People people = new People();
-        if (peopleOpt.isEmpty()) {
-            people.setCpf(giftProductInput.person().cpf());
-            people.setName(giftProductInput.person().name());
-            people.setPhone(giftProductInput.person().phone());
-        } else {
-            people = peopleOpt.get();
-        }
-
-        GiftBuyer giftBuyer = new GiftBuyer();
-        giftBuyer.setPeople(people);
-
-        giftBuyer.setGiftProduct(product);
-
-        return this.saveGiftBuyer(giftBuyer);
+        return this.saveGiftBuyer(giftProductInput, product);
     }
 
     @Override
     @Transactional
-    public GiftBuyer saveGiftBuyer(GiftBuyer product) {
-        return giftBuyerRepository.save(product);
+    public GiftBuyerDto saveGiftBuyer(GiftBuyerInput input, GiftProduct product) {
+        Optional<People> peopleOpt = peopleService.findPeopleByCpf(input.person().cpf());
+        People people = new People();
+        if (peopleOpt.isEmpty()) {
+            people.setCpf(input.person().cpf());
+            people.setName(input.person().name());
+            people.setPhone(input.person().phone());
+        } else {
+            people = peopleOpt.get();
+        }
+        GiftBuyer giftBuyer = new GiftBuyer();
+        giftBuyer.setPeople(people);
+        giftBuyer.setGiftProduct(product);
+        return mapper.toDTO(giftBuyerRepository.save(giftBuyer));
     }
 
     @Override
-    public Optional<GiftBuyer> findGiftBuyerById(Long id) {
-        return giftBuyerRepository.findById(id);
+    public Optional<GiftBuyerDto> findGiftBuyerById(Long id) {
+        return giftBuyerRepository.findById(id)
+                .map(mapper::toDTO);
     }
 
     @Override
-    public List<GiftBuyer> findAllGiftBuyers() {
-        return giftBuyerRepository.findAll();
+    public List<GiftBuyerDto> findAllGiftBuyers() {
+        return giftBuyerRepository.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
     }
 
     @Override

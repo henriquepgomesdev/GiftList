@@ -14,9 +14,5 @@ public interface ProductService {
 
     List<Product> findAllProducts();
 
-    void updateProductStock(Long productId, Integer newStock);
-
-    void updateProductPrice(Long productId, BigDecimal newPrice);
-
     void deleteProduct(Long productId);
 }
